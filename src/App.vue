@@ -12,7 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   max-width: 600px;
   margin: 0 auto;
-  text-align: center;
+  /*text-align: center;*/
   color: #555;
 }
 
