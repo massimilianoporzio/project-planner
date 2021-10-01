@@ -1,11 +1,12 @@
 <template>
-<div class="project">
-  <div class="actions" @click="showDetails=!showDetails">
-    <h3>{{project.title}}</h3>
+<div class="project" :class="{complete: project.complete}">
+  <div class="actions">
+    <h3 @click="showDetails=!showDetails">{{project.title}} </h3>
     <div class="icons">
       <span class="material-icons">edit</span>
-      <span @click="deleteProject(projectId)" class="material-icons">delete</span>
-      <span class="material-icons">done</span>
+      <span @click="deleteProject" class="material-icons">delete</span>
+      <span @click="toggleComplete" class="material-icons" :class="project.complete? 'tick' : ''">done</span>
+
     </div>
   </div>
   <div class="details" v-if="showDetails">
@@ -18,7 +19,7 @@
 import {ref} from "vue";
 
 const name = "SingleProject"
-const uri = "http://localhost:3000/projects"
+const uri = "http://localhost:3000/projects/" + props.project.id
 
 let showDetails = ref(false)
 const props = defineProps({
@@ -28,8 +29,25 @@ const props = defineProps({
    }
   }
 )
-function deleteProject(projectId){
 
+const emits = defineEmits(['delete','complete'])
+
+function toggleComplete(){
+  fetch(uri,
+      {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({complete: !props.project.complete})
+            }).then(()=>{
+              emits('complete',props.project.id)
+          }).catch(err=>console.log(err))
+
+}
+
+function deleteProject(projectId){
+  fetch(uri,{method: 'DELETE'})
+  .then(()=>{emits('delete', props.project.id)})
+  .catch(err => console.log(err))
 }
 
 </script>
@@ -43,6 +61,16 @@ function deleteProject(projectId){
   box-shadow: 1px 2px 3px rgba(0,0,0,0.5);
   border-left: 4px solid #e90074;
 }
+.project.complete {
+  border-left: 4px solid #00ce89;
+
+}
+
+.project.complete .tick {
+  color: #00ce89;
+}
+
+
 h3 {
   cursor: pointer;
 }
@@ -60,4 +88,5 @@ h3 {
 .material-icons:hover{
   color: #777
 }
+
 </style>
