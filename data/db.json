@@ -2,8 +2,8 @@
   "projects": [
     {
       "id": 1,
-      "title": "Create new homepage banner",
-      "details": "Lorem ipsum",
+      "title": "Create new homepage banner2",
+      "details": "Lorem ipsum2222",
       "complete": false
     },
     {
@@ -11,6 +11,12 @@
       "title": "Make marketing email",
       "details": "Lorem ipsum",
       "complete": true
+    },
+    {
+      "title": "Make a new website",
+      "details": "blah blah blah",
+      "complete": false,
+      "id": 3
     }
   ]
 }

@@ -1,4 +1,5 @@
 <template>
+  <Navbar/>
   <router-view/>
 </template>
 
@@ -17,3 +18,8 @@ body {
 }
 
 </style>
+
+<script setup>
+import Navbar from "@/components/Navbar";
+
+</script>
